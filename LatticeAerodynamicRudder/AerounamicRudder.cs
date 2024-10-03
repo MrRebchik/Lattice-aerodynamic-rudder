@@ -8,6 +8,6 @@ namespace AerodynamicRudder
 {
     public abstract class AerounamicRudder
     {
-        public abstract decimal GetAreaWithCurrentAngel(decimal angle);
+        public abstract double GetAreaWithCurrentAngel(double angle);
     }
 }

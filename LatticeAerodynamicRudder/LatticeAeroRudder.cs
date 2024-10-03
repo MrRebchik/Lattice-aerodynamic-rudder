@@ -5,41 +5,41 @@ namespace LatticeAerodynamicRudder
 {
     public class LatticeAeroRudder : AerounamicRudder
     {
-        public decimal Height { get; set; }
-        public decimal Width { get; set; }
-        public decimal Depth { get; set; }
-        public decimal BorderThickness { get; set; }
-        public decimal BorderDistance { get; set; }
-        public decimal InnerEdgeThickness { get; set; }
-        decimal stepLength
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public double Depth { get; set; }
+        public double BorderThickness { get; set; }
+        public double BorderDistance { get; set; }
+        public double InnerEdgeThickness { get; set; }
+        double stepLength
         {
             get => BorderDistance + BorderThickness;
         }
-        public override decimal GetAreaWithCurrentAngel(decimal angle)
+        public override double GetAreaWithCurrentAngel(double angleDegrees)
         {
-            return GetPerimeter() * Depth * (decimal)Math.Cos((double)angle);
+            return GetPerimeter() * Depth * Math.Cos(angleDegrees/ 57.3);
         }
-        decimal GetPerimeter()
+        double GetPerimeter()
         {
-            decimal lessSide = Height < Width ? Height : Width;
-            decimal biggerSide = Height >= Width ? Width : Height;
-            decimal square, rectangle;
+            double lessSide = Height < Width ? Height : Width;
+            double biggerSide = Height >= Width ? Width : Height;
+            double square, rectangle;
             square = 8 * (GetArithmeticProgressionSum(GetStepsCount(lessSide)) + lessSide);
-            var reducedLessSide = lessSide * (decimal)Math.Sqrt(2);
-            var reducedDifference = (biggerSide - lessSide) * (decimal)Math.Sqrt(2);
+            var reducedLessSide = lessSide * Math.Sqrt(2);
+            var reducedDifference = (biggerSide - lessSide) * Math.Sqrt(2);
             rectangle = biggerSide - lessSide * (DivideInteger(lessSide,stepLength)+ lessSide * (DivideInteger(biggerSide-lessSide, stepLength)));
             return square + rectangle;
         }
-        decimal GetArithmeticProgressionSum(int steps)
+        double GetArithmeticProgressionSum(int steps)
         {
-            return (steps - 1) * steps * stepLength * 0.5m;
+            return (steps - 1) * steps * stepLength * 0.5;
         }
-        int GetStepsCount(decimal length)
+        int GetStepsCount(double length)
         {
-            var reducedStepLength = stepLength * (decimal)Math.Sqrt(2);
+            var reducedStepLength = stepLength * Math.Sqrt(2);
             return DivideInteger(length,reducedStepLength);
         }
-        int DivideInteger(decimal a, decimal b)
+        int DivideInteger(double a, double b)
         {
             return (int)((a - a % b) / b);
         }
